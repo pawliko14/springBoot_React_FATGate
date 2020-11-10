@@ -1,0 +1,9 @@
+.lastActivitiesContainer {
+    width:100%;
+    display:flex;
+    flex-direction:row;
+}
+
+.rightDiv {
+    padding-left:15px;
+}

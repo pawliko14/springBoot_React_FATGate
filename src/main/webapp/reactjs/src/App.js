@@ -19,6 +19,7 @@ function App() {
         marginTop:"20px"
     };
 
+
   return (
     <Router>
         <NavigationBar/>
@@ -27,9 +28,9 @@ function App() {
             <Col lg={12} style={marginTop}>
                 <Switch>
                     <Route path = "/" exact component={Welcome} />
-                    <Route path = "/test" exact component={CurrentState} />
-                    <Route path = "/test1" exact component={ActiveWorkers} />
-                    <Route path = "/test2" exact component={LastActivities} />
+                    <Route path = "/currentstate" exact component={CurrentState} />
+                    <Route path = "/activeworkers" exact component={ActiveWorkers} />
+                    <Route path = "/lastactivities" exact component={LastActivities} />
 
                 </Switch>
              </Col>

@@ -67,7 +67,7 @@ public class AccessControler {
 	
 	
 	@GetMapping("/activeworkers")
-	public List<WorkersAndID> StateOFworkersSinceDate()
+	public List<GeneralTable> StateOFworkersSinceDate()
 	{
 		return obj.peopleInFATlist();
 	}

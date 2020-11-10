@@ -1,8 +1,12 @@
 import React,{Component} from 'react';
 
-import {Card,Table,Form,Button} from 'react-bootstrap';
+import './style.css';
+
+import {Card,Table,Form,Button,Container,Row, FormControl } from 'react-bootstrap';
 
 import axios from 'axios';
+
+
 
 export default class LastActivities extends Component {
 
@@ -10,13 +14,17 @@ constructor(props)
 {
 super(props);
     this.state = {
-            persons : []
+            persons : [],
+            count_numbers : 30
     };
+
+     this.handleChange = this.handleChange.bind(this);
+     this.handleSubmit = this.handleSubmit.bind(this);
 }
 
 componentDidMount()
 {
-    axios.get("http://localhost:8084/lastinout/200")
+    axios.get("http://localhost:8084/lastinout/" + this.state.count_numbers)
         .then(response => response.data)
         .then((data) => {
             this.setState({persons: data})
@@ -25,37 +33,45 @@ componentDidMount()
 
 
 
+  handleChange(event) {
+    this.setState({count_numbers: event.target.value});
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+
+     axios.get("http://localhost:8084/lastinout/" + this.state.count_numbers)
+            .then(response => response.data)
+            .then((data) => {
+                this.setState({persons: data})
+            });
+
+  }
+
     render()
     {
 
         return (
-         <div>
-            <Form>
-              <Form.Group controlId="formBasicEmail">
-                <Form.Label>Email address</Form.Label>
-                <Form.Control type="email" placeholder="Enter email" />
-                <Form.Text className="text-muted">
-                  We'll never share your email with anyone else.
-                </Form.Text>
-              </Form.Group>
+        <div className = "lastActivitiesContainer">
+         <div className = "leftDiv" >
+           <Form onSubmit={this.handleSubmit}>
+               <p className = {"border border-dark bg-dark text-white"}>Number of rows - default 30</p>
+                  <label>
+                    <input type="number" value={this.state.value} onChange={this.handleChange} min="1" max="200"/>
+                  </label>
+                  <input type="submit" value="Submit"  />
+                </Form>
 
-              <Form.Group controlId="formBasicPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" />
-              </Form.Group>
-              <Form.Group controlId="formBasicCheckbox">
-                <Form.Check type="checkbox" label="Check me out" />
-              </Form.Group>
-              <Button variant="primary" type="submit">
-                Submit
-              </Button>
-            </Form>
 
+
+            </div>
+
+            <div className="rightDiv" >
               <Card className = {"border border-dark bg-dark text-white"}>
                        <Card.Header>Last activities on entrance gate</Card.Header>
                        <Card.Body>
                           <Table bordered hover striped variant = "dark">
-                          <Table striped bordered hover>
+                          <Table className = {"border border-dark bg-dark text-white"}>
                             <thead>
                               <tr>
                                 <th>#</th>
@@ -96,7 +112,7 @@ componentDidMount()
                    </Card>
 
           </div>
-
+        </div>
 
         );
     }
