@@ -21,7 +21,7 @@ export default class ActiveWorkers extends Component {
 
             componentDidMount()
             {
-                axios.get("http://localhost:8084/activeworkers")
+                axios.get("http://192.168.90.66:8084/activeworkers")
                     .then(response => response.data)
                     .then((data) => {
                         this.setState({persons: data})

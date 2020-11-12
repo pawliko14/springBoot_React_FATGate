@@ -24,7 +24,7 @@ super(props);
 
 componentDidMount()
 {
-    axios.get("http://localhost:8084/lastinout/" + this.state.count_numbers)
+    axios.get("http://192.168.90.66:8084/lastinout/" + this.state.count_numbers)
         .then(response => response.data)
         .then((data) => {
             this.setState({persons: data})

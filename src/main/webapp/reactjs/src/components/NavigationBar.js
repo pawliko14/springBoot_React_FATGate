@@ -16,7 +16,11 @@ class NavigationBar extends React.Component {
                 <Link to = {"currentstate"} className="nav-link"> Current State</Link>
                 <Link to = {"activeworkers"} className="nav-link"> Active Workers</Link>
                 <Link to = {"lastactivities"} className="nav-link"> last Activities</Link>
-
+                <Link to = {"Statistics"} className="nav-link"> Statistics</Link>
+                <Link to = {"HistoricalData"} className="nav-link"> HistoricalData</Link>
+              </Nav>
+              <Nav className="navbar-right">
+                 <Link to = {"Login"} className="nav-link"> Login</Link>
               </Nav>
         </Navbar>
         );

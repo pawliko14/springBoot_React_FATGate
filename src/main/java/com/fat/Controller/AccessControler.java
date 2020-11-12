@@ -16,7 +16,7 @@ import sqlObjects.WorkersAndID;
 
 import java.util.List;
 
-
+@CrossOrigin(origins = "http://192.168.90.66:3000")
 @RestController
 public class AccessControler {
 	@Autowired

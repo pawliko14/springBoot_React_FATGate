@@ -15,7 +15,7 @@ super(props);
 
 componentDidMount()
 {
-    axios.get("http://localhost:8084/currentstate")
+    axios.get("http://192.168.90.66:8084/currentstate")
         .then(response => response.data)
         .then((data) => {
             this.setState({persons: data})
