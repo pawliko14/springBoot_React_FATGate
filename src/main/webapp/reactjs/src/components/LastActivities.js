@@ -5,6 +5,7 @@ import './style.css';
 import {Card,Table,Form,Button,Container,Row, FormControl } from 'react-bootstrap';
 
 import axios from 'axios';
+import {IP_PATH}  from './Constants';
 
 
 
@@ -24,11 +25,13 @@ super(props);
 
 componentDidMount()
 {
-    axios.get("http://192.168.90.66:8084/lastinout/" + this.state.count_numbers)
+    axios.get(IP_PATH + "lastinout/" + this.state.count_numbers)
         .then(response => response.data)
         .then((data) => {
             this.setState({persons: data})
         });
+
+
 }
 
 
@@ -40,11 +43,14 @@ componentDidMount()
   handleSubmit(event) {
     event.preventDefault();
 
-     axios.get("http://localhost:8084/lastinout/" + this.state.count_numbers)
+     axios.get(IP_PATH + "lastinout/" + this.state.count_numbers)
             .then(response => response.data)
             .then((data) => {
                 this.setState({persons: data})
             });
+
+        console.log("length: " + this.state.persons.length);
+
 
   }
 

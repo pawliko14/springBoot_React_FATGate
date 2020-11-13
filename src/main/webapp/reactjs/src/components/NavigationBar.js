@@ -20,6 +20,7 @@ class NavigationBar extends React.Component {
                 <Link to = {"HistoricalData"} className="nav-link"> HistoricalData</Link>
               </Nav>
               <Nav className="navbar-right">
+                <Link to = {"Logout"} className="nav-link"> Logout</Link>
                  <Link to = {"Login"} className="nav-link"> Login</Link>
               </Nav>
         </Navbar>

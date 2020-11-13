@@ -3,6 +3,8 @@ import React,{Component} from 'react';
 import {Card,Table,Form,Button} from 'react-bootstrap';
 
 import axios from 'axios';
+import {IP_PATH}  from './Constants';
+
 
 export default class CurrentState extends Component {
 constructor(props)
@@ -15,7 +17,7 @@ super(props);
 
 componentDidMount()
 {
-    axios.get("http://192.168.90.66:8084/currentstate")
+    axios.get(IP_PATH+ "currentstate")
         .then(response => response.data)
         .then((data) => {
             this.setState({persons: data})
@@ -29,7 +31,7 @@ componentDidMount()
 
         return (
               <Card className = {"border border-dark bg-dark text-white"}>
-                       <Card.Header>Current state of workers in FAT</Card.Header>
+                       <Card.Header>Current state of workers in FAT - Who is in FAT in this paricular moment</Card.Header>
                        <Card.Body>
                           <Table bordered hover striped variant = "dark">
                           <Table className = {"border border-dark bg-dark text-white"}>

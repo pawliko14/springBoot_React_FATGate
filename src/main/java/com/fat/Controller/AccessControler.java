@@ -17,7 +17,7 @@ import sqlObjects.WorkersAndID;
 
 import java.util.List;
 
- @CrossOrigin(origins = "http://192.168.90.66:3000")  // <- for production purpose, on tests not necessary
+ //@CrossOrigin(origins = "http://192.168.90.66:3000")  // <- for production purpose, on tests not necessary
 @RestController
 public class AccessControler {
 	@Autowired

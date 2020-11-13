@@ -4,6 +4,7 @@ import {Card,Table,Form,Button} from 'react-bootstrap';
 
 import axios from 'axios'
 
+import {IP_PATH}  from './Constants';
 
 
 
@@ -21,7 +22,7 @@ export default class ActiveWorkers extends Component {
 
             componentDidMount()
             {
-                axios.get("http://192.168.90.66:8084/activeworkers")
+                axios.get(IP_PATH +"activeworkers")
                     .then(response => response.data)
                     .then((data) => {
                         this.setState({persons: data})
@@ -50,7 +51,7 @@ export default class ActiveWorkers extends Component {
 
                                <div className="rightDiv">
                                  <Card className = {"border border-dark bg-dark text-white"}>
-                                   <Card.Header>Current state of workers in FAT</Card.Header>
+                                   <Card.Header>List of All workers who bounce at the FAT entrance gate </Card.Header>
                                    <Card.Body>
                                       <Table bordered hover striped variant = "dark">
                                       <Table className = {"border border-dark bg-dark text-white"}>

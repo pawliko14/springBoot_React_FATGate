@@ -9,7 +9,7 @@ import {IP_PATH}  from './Constants';
 
 
 
-export default class Statistics extends Component {
+export default class Logout extends Component {
 
     render()
     {

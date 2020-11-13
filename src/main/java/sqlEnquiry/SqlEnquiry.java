@@ -284,13 +284,13 @@ public class SqlEnquiry {
 
 		// get all info about worker in/out in FAT entrance gate
 		sql_gate_actions = "select a.akcja,a.data from fat.access a \n" +
-				"where id_karty  ='?'\n" +
-				"order by `data`  asc ";
+				"where id_karty  = ?\n" +
+				"order by `data` desc ";
 
 		try {
-			PreparedStatement takeDate = connection.prepareStatement(sql_gate_actions);
-			takeDate.setInt(1, worker_id);
-			ResultSet r2 = takeDate.executeQuery();
+			PreparedStatement takeDate2 = connection.prepareStatement(sql_gate_actions);
+			takeDate2.setInt(1, worker_id);
+			ResultSet r2 = takeDate2.executeQuery();
 
 			while(r2.next())
 			{
@@ -301,7 +301,7 @@ public class SqlEnquiry {
 
 				bounce_list.add(bounce);
 			}
-			takeDate.close();
+			takeDate2.close();
 			r2.close();
 
 		} catch(Exception e)

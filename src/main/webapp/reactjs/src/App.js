@@ -17,6 +17,8 @@ import Statistics from './components/Statistics';
 import HistoricalData from './components/HistoricalData';
 
 import Login from "./components/Login";
+import Logout from "./components/Logout";
+
 
 function App() {
 
@@ -39,7 +41,7 @@ function App() {
                     <Route path = "/Statistics" exact component={Statistics} />
                     <Route path = "/HistoricalData" exact component={HistoricalData} />
                     <Route path = "/Login" exact component={Login} />
-
+                    <Route path = "/Logout" exact component={Logout} />
 
                 </Switch>
              </Col>
