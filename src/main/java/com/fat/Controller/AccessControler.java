@@ -12,11 +12,12 @@ import com.fat.repository.access;
 
 import sqlEnquiry.SqlEnquiry;
 import sqlObjects.GeneralTable;
+import sqlObjects.UserHistory;
 import sqlObjects.WorkersAndID;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://192.168.90.66:3000")
+ @CrossOrigin(origins = "http://192.168.90.66:3000")  // <- for production purpose, on tests not necessary
 @RestController
 public class AccessControler {
 	@Autowired
@@ -62,6 +63,7 @@ public class AccessControler {
 	@GetMapping("lastinout/{count}")
 	public List<GeneralTable> lastInOut(@PathVariable("count") int count)
 	{
+
 		return obj.mainEnguiry(count);
 	}
 	
@@ -79,6 +81,9 @@ public class AccessControler {
 		return obj.getCurrentStateOfPeopleInFat();
 	}
 	
-	
+	@GetMapping("workerinfo/{workerid}")
+	public UserHistory WorkerHistory(@PathVariable("workerid") int workerid) {
+		return obj.getUserHistory(workerid);
+	}
 	
 }

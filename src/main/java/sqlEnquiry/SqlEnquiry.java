@@ -7,7 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import sqlObjects.GateBounce;
 import sqlObjects.GeneralTable;
+import sqlObjects.UserHistory;
 import sqlObjects.WorkersAndID;
 
 
@@ -170,7 +172,6 @@ public class SqlEnquiry {
 	}
 
 		System.out.println("list_of_people_in_fat_since length " + list_of_people_in_fat_since.size());
-
 		System.out.println("list_of_people_in_fat_since temporaryList_currentstate " + temporaryList_currentstate.size());
 
 		return list_of_people_in_fat_since;
@@ -224,6 +225,103 @@ public class SqlEnquiry {
 		
 	return general_table_list;	
 	}
-	
+
+
+	public UserHistory getUserHistory(int worker_id)
+	{
+		connection = DBconnector.Connection2DB.dbConnector();
+
+		String sql_general_worker_info;
+		String sql_gate_actions;
+
+		UserHistory user;
+		List<GateBounce> bounce_list = new ArrayList<>();
+
+		String id_karty=null;
+		String data_utworzenia=null;
+		String nazwisko_imie=null;
+		String hacofost_numer = null;
+		String stanowisko = null;
+		String firma=null;
+
+		// get general info of worker by id_karty
+		sql_general_worker_info = "select  ac.id_karty, ac.`data`,\n" +
+				"cs.nazwisko_imie, cs.HacoSoftnumber,\n" +
+				"cs.stanowisko, cs.firma\n" +
+				"from fat.access as ac\n" +
+				"left join fat.cards_name_surname_nrhacosoft as cs\n" +
+				"on ac.id_karty = cs.id_karty\n" +
+				"where cs.id_karty = ?\n" +
+				"and ac.akcja = 'nowy_pracownik'\n" +
+				"order by ac.`data` asc limit 1";
+
+		try {
+			assert connection != null;
+			PreparedStatement takeDate = connection.prepareStatement(sql_general_worker_info);
+			takeDate.setInt(1, worker_id);
+			ResultSet r = takeDate.executeQuery();
+
+			if(r.next())
+			{
+				id_karty = r.getString("id_karty");
+				data_utworzenia = r.getString("data");
+				nazwisko_imie = r.getString("nazwisko_imie");
+				hacofost_numer = r.getString("HacoSoftnumber");
+				stanowisko = r.getString("stanowisko");
+				firma = r.getString("firma");
+
+			}
+			takeDate.close();
+			r.close();
+
+		} catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+
+
+		/* 2nd sql */
+
+		// get all info about worker in/out in FAT entrance gate
+		sql_gate_actions = "select a.akcja,a.data from fat.access a \n" +
+				"where id_karty  ='?'\n" +
+				"order by `data`  asc ";
+
+		try {
+			PreparedStatement takeDate = connection.prepareStatement(sql_gate_actions);
+			takeDate.setInt(1, worker_id);
+			ResultSet r2 = takeDate.executeQuery();
+
+			while(r2.next())
+			{
+				String action = r2.getString("akcja");
+				String action_date  = r2.getString("data");
+
+				GateBounce bounce = new GateBounce(action,action_date);
+
+				bounce_list.add(bounce);
+			}
+			takeDate.close();
+			r2.close();
+
+		} catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		/* final object creation  - builder, order does not matter, but all fields have to be covered */
+
+		user = new UserHistory.Builder()
+				.nazwisko_imie(nazwisko_imie)
+				.id_number(id_karty)
+				.Creation_date(data_utworzenia)
+				.hacofostnumber(hacofost_numer)
+				.stanowisko(stanowisko)
+				.firma(firma)
+				.bounceList(bounce_list)
+				.build();
+
+		return user;
+	}
 	
 }
