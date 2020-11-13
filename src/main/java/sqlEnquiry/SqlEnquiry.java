@@ -20,9 +20,9 @@ public class SqlEnquiry {
 	
 	public SqlEnquiry()
 	{
-		general_table_list= new ArrayList<GeneralTable>();
-		list_of_people_in_FAT_since = new ArrayList<GeneralTable>();
-		current_state_of_pople_in_FAT= new ArrayList<WorkersAndID>();
+		general_table_list= new ArrayList<>();
+		list_of_people_in_FAT_since = new ArrayList<>();
+		current_state_of_pople_in_FAT= new ArrayList<>();
 	}
 	
 	public List<WorkersAndID> getCurrentStateOfPeopleInFat() 
@@ -43,6 +43,7 @@ public class SqlEnquiry {
 					"left join fat.cards_name_surname_nrhacosoft cnsn \n" +
 					"on a.id_karty =cnsn.id_karty  \n" +
 					"where DATE(a.`data`) like curdate() \n" +
+					"and cnsn.nazwisko_imie  is not null \n"+
 					"group by a.id_karty \n" +
 					"order by a.`data`  desc\t\t";
 			
@@ -79,7 +80,6 @@ public class SqlEnquiry {
 			try {
 				connection.close();
 			} catch (SQLException e) {
-				System.out.println(e);
 				e.printStackTrace();
 			}
 
@@ -133,14 +133,13 @@ public class SqlEnquiry {
 		}
 		catch(Exception e)
 		{
-			System.out.println(e);
+			e.printStackTrace();
 		}
 		
 		
 		try {
 			connection.close();
 		} catch (SQLException e) {
-			System.out.println(e);
 			e.printStackTrace();
 		}
 
@@ -152,25 +151,28 @@ public class SqlEnquiry {
 
 	private List<GeneralTable> check_if_worker_is_currently_in_job(List<WorkersAndID> temporaryList_currentstate, List<GeneralTable> list_of_people_in_fat_since) {
 
-	if(temporaryList_currentstate.size() == 0)
-	{
-		for(int i = 0 ;i < list_of_people_in_fat_since.size();i++)
-		{
-			list_of_people_in_fat_since.get(i).setAkcja(("nieobecny"));
-		}
+	if(temporaryList_currentstate.size() == 0) {
+		list_of_people_in_fat_since.forEach((l -> l.setAkcja("nieobecny")));
 	}
 	else {
-		for(int i = 0 ; i < temporaryList_currentstate.size();i++)
-		{
-			for(int j = 0 ;j < list_of_people_in_fat_since.size();j++)
-			{
-				if(temporaryList_currentstate.get(i).getWorkerName().equals(list_of_people_in_fat_since.get(j).getNazwisko_imie()))
-				{
-					list_of_people_in_fat_since.get(j).setAkcja("jest w firmie");
+		for(int i = 0 ; i < temporaryList_currentstate.size();i++) {
+			for(int j = 0 ;j < list_of_people_in_fat_since.size();j++) {
+					if (temporaryList_currentstate.get(i).getWorkerName().equals(list_of_people_in_fat_since.get(j).getNazwisko_imie())) {
+						list_of_people_in_fat_since.get(j).setAkcja("jest w firmie");
 				}
 			}
 		}
+
+
+
+
+
 	}
+
+		System.out.println("list_of_people_in_fat_since length " + list_of_people_in_fat_since.size());
+
+		System.out.println("list_of_people_in_fat_since temporaryList_currentstate " + temporaryList_currentstate.size());
+
 		return list_of_people_in_fat_since;
 	}
 
@@ -217,7 +219,7 @@ public class SqlEnquiry {
 	        }
 		  catch(Exception e)
 		  {
-			  System.out.println(e);
+		  	e.printStackTrace();
 		  }
 		
 	return general_table_list;	
