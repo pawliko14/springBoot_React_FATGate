@@ -10,7 +10,6 @@ import org.springframework.lang.NonNull;
 import javax.persistence.*;
 
 import java.io.Serializable;
-//import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 @Entity
