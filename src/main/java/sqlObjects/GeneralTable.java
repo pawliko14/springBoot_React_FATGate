@@ -10,8 +10,13 @@ public class GeneralTable {
 	private String hacosoftnumber;
 	private String stanowisko;
 	private String firma;
-	
-	
+
+	public GeneralTable(String naz_imie, String id_karty, String firma, String stanowisko) {
+		this.nazwisko_imie = naz_imie;
+		this.id_karty =id_karty;
+		this.firma = firma;
+		this.stanowisko = stanowisko;
+	}
 	
 	
 	public GeneralTable(String id, String id_karty, String akcja, String data, String nazwisko_imie,
@@ -26,6 +31,9 @@ public class GeneralTable {
 		this.stanowisko = stanowisko;
 		this.firma = firma;
 	}
+
+
+
 	public String getId() {
 		return id;
 	}

@@ -13,11 +13,19 @@ import ActiveWorkers from './components/ActiveWorkers';
 import CurrentState from './components/CurrentState';
 import LastActivities from './components/LastActivities';
 
+import Statistics from './components/Statistics';
+import HistoricalData from './components/HistoricalData';
+
+import Login from "./components/Login";
+import Logout from "./components/Logout";
+
+
 function App() {
 
     const marginTop = {
         marginTop:"20px"
     };
+
 
   return (
     <Router>
@@ -27,9 +35,13 @@ function App() {
             <Col lg={12} style={marginTop}>
                 <Switch>
                     <Route path = "/" exact component={Welcome} />
-                    <Route path = "/test" exact component={CurrentState} />
-                    <Route path = "/test1" exact component={ActiveWorkers} />
-                    <Route path = "/test2" exact component={LastActivities} />
+                    <Route path = "/currentstate" exact component={CurrentState} />
+                    <Route path = "/activeworkers" exact component={ActiveWorkers} />
+                    <Route path = "/lastactivities" exact component={LastActivities} />
+                    <Route path = "/Statistics" exact component={Statistics} />
+                    <Route path = "/HistoricalData" exact component={HistoricalData} />
+                    <Route path = "/Login" exact component={Login} />
+                    <Route path = "/Logout" exact component={Logout} />
 
                 </Switch>
              </Col>

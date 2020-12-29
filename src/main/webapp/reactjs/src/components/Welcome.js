@@ -11,7 +11,7 @@ class Welcome extends React.Component{
                   <h1>Home Page</h1>
                   <p>
                     This programs provides information about FAT workers entrace states.
-                    at this stage following options are provided:
+                    At this stage following options are provided:
                     <ul>
                         <li>
                             Active workers status
@@ -22,8 +22,14 @@ class Welcome extends React.Component{
                         <li>
                             Informations about last actions on entrance gate
                         </li>
+                        <li>
+                            Historical data of specific worker(under development) - DONE
+                        </li>
+                        <li>
+                            Logout, Login, Staticis NOT implemeted yet
+                        </li>
                     </ul>
-
+                        last Stable version 28.12.2020
                   </p>
                 </Jumbotron>
      );

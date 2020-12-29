@@ -1,18 +1,15 @@
 package com.fat.access;
+
+import com.github.shyiko.mysql.binlog.BinaryLogClient;
+import java.io.IOException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 
@@ -27,11 +24,23 @@ public class AccessApplication {
 	
 
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		SpringApplication.run(AccessApplication.class, args);
+
+		// db logger
+	//	call_method();
+
 	}
 
-	
+//	private static void call_method() throws IOException {
+//		BinaryLogClient client =  new BinaryLogClient("localhost", 3306, "root", "");
+//
+//		client.registerEventListener(event -> {
+//			if(event.toString().contains(" sql='insert into"))
+//					System.out.println(event);
+//		});
+//		client.connect();
+//	}
 
-	
+
 }

@@ -34,7 +34,7 @@ public class Cards_nameController {
 	@GetMapping("tescik22")
 	public List<String> tescik2()
 	{
-		return impl.finddupa();
+		return impl.tesingPurposeNotUsedInApplication();
 	}
 	
 	
