@@ -25,16 +25,20 @@ super(props);
             stanowisko : "null",
             firma: "null",
             creation_date : "null",
-            count_numbers : 5532471
+            worker_id : 2905411,
+            count_rows : 30
     };
 
      this.handleChange = this.handleChange.bind(this);
      this.handleSubmit = this.handleSubmit.bind(this);
+
+     this.handleRowChange = this.handleRowChange.bind(this);
+     this.handleSubmit_rowChange = this.handleSubmit_rowChange.bind(this);
 }
 
 componentDidMount()
 {
-    axios.get( IP_PATH + "workerinfo/" + this.state.count_numbers)
+    axios.get( IP_PATH + "workerinfo/" + this.state.worker_id + "/" + this.state.count_rows)
         .then(response => response.data)
         .then((data) => {
             this.setState({bounces: data.bounceList, nazwisko_imie: data.nazwisko_imie, hacofostnumber: data.hacofostnumber,
@@ -47,15 +51,35 @@ componentDidMount()
 }
 
 
+    handleRowChange(event){
+    this.setState({
+    count_rows: event.target.value
+    });
+    }
+  handleSubmit_rowChange(event) {
+    event.preventDefault();
+
+     axios.get(IP_PATH + "workerinfo/" + this.state.worker_id + "/" + this.state.count_rows)
+            .then(response => response.data)
+                   .then((data) => {
+                       this.setState({nazwisko_imie: data.nazwisko_imie, hacofostnumber: data.hacofostnumber,
+                                      id_number: data.id_number, stanowisko: data.stanowisko,
+                                      firma: data.firma, creation_date: data.creation_date , bounces: data.bounceList})
+                   });
+
+  }
+
 
   handleChange(event) {
-    this.setState({count_numbers: event.target.value});
+    this.setState({
+    worker_id: event.target.value
+    });
   }
 
   handleSubmit(event) {
     event.preventDefault();
 
-     axios.get(IP_PATH + "workerinfo/" + this.state.count_numbers)
+     axios.get(IP_PATH + "workerinfo/" + this.state.worker_id + "/" + this.state.count_rows)
             .then(response => response.data)
                    .then((data) => {
                        this.setState({nazwisko_imie: data.nazwisko_imie, hacofostnumber: data.hacofostnumber,
@@ -75,9 +99,17 @@ componentDidMount()
            <Form onSubmit={this.handleSubmit}>
                <p className = {"border border-dark bg-dark text-white"}>Type Worker ID </p>
                   <label>
-                    <input type="number" value={this.state.value} onChange={this.handleChange} />
+                    <input type="number" value={this.state.value} defaultValue= {this.state.worker_id} onChange={this.handleChange} />
                   </label>
                   <input type="submit" value="Submit"  />
+                </Form>
+
+                <Form onSubmit={this.handleSubmit_rowChange}>
+                          <p className = {"border border-dark bg-dark text-white"}>Rows to show </p>
+                               <label>
+                              <input type="number" value={this.state.value} defaultValue = "30" onChange={this.handleRowChange}  min="1" max="200" />
+                            </label>
+                          <input type="submit" value="Submit"  />
                 </Form>
             </div>
 
@@ -135,8 +167,8 @@ componentDidMount()
                                                  <td colSpan ="3">{this.state.bounces.length} bounces</td>
                                                  </tr>
                                                  :
-                                        this.state.bounces.slice(0,20).map((bounce,index) =>(
-                                                  <tr key={bounce.action}>
+                                        this.state.bounces.map((bounce,index) =>(
+                                                  <tr key={index}>
                                                         <td>{index+1} </td>
                                                         <td>{bounce.action} </td>
                                                         <td>{bounce.date} </td>

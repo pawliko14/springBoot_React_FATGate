@@ -10,8 +10,8 @@ public class Connection2DB {
 	{
 		try {	
 			Class.forName("org.mariadb.jdbc.Driver");
-		//	Connection conn=DriverManager.getConnection("jdbc:mariadb://192.168.90.123/fatdb","listy","listy1234");
-			Connection conn=DriverManager.getConnection("jdbc:mariadb://localhost/fat","root","");
+			Connection conn=DriverManager.getConnection("jdbc:mariadb://192.168.90.123/fatdb","listy","listy1234");
+		//	Connection conn=DriverManager.getConnection("jdbc:mariadb://localhost/fat","root","");
 
 			return conn;
 		}catch (Exception e)

@@ -17,8 +17,8 @@ import sqlObjects.WorkersAndID;
 
 import java.util.List;
 
-//@CrossOrigin(origins = "http://192.168.90.66:3000")  // <- for production purpose, on tests not necessary
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://192.168.90.66:3000")  // <- for production purpose, on tests not necessary
 @RestController
 public class AccessControler {
 	@Autowired
@@ -82,9 +82,9 @@ public class AccessControler {
 		return obj.getCurrentStateOfPeopleInFat();
 	}
 	
-	@GetMapping("workerinfo/{workerid}")
-	public UserHistory WorkerHistory(@PathVariable("workerid") int workerid) {
-		return obj.getUserHistory(workerid);
+	@GetMapping("workerinfo/{workerid}/{count}")
+	public UserHistory WorkerHistory(@PathVariable("workerid") int workerid, @PathVariable("count") int count) {
+		return obj.getUserHistory(workerid,count);
 	}
 	
 }

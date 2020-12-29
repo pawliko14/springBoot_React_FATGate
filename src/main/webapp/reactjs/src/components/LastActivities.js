@@ -25,12 +25,31 @@ super(props);
 
 componentDidMount()
 {
-    axios.get(IP_PATH + "lastinout/" + this.state.count_numbers)
+
+this.loadData()
+this.timer = setInterval(() => {
+    this.loadData();
+    },2000);
+}
+
+
+componentWillUnmount() {
+        clearInterval(this.timer);
+    }
+
+loadData()
+{
+    try {
+     const response =  axios.get(IP_PATH + "lastinout/" + this.state.count_numbers)
         .then(response => response.data)
         .then((data) => {
             this.setState({persons: data})
         });
-
+        }
+        catch(e)
+        {
+        console.log(e);
+        }
 
 }
 
@@ -81,6 +100,7 @@ componentDidMount()
                             <thead>
                               <tr>
                                 <th>#</th>
+                                <th>id</th>
                                 <th>id_karty</th>
                                 <th>akcja</th>
                                 <th>data</th>
@@ -92,12 +112,13 @@ componentDidMount()
                             <tbody>
                             {this.state.persons.length === 0 ?
                               <tr align="center">
-                              <td colSpan ="7">{this.state.persons.length} persons</td>
+                              <td colSpan ="8">{this.state.persons.length} persons</td>
                               </tr>
                               :
                               this.state.persons.map((person,index) =>(
-                              <tr key={person.id_karty}>
+                              <tr key={index}>
                                     <td>{index+1} </td>
+                                    <td>{person.id} </td>
                                     <td>{person.id_karty} </td>
                                     <td>{person.akcja} </td>
                                     <td>{person.data} </td>

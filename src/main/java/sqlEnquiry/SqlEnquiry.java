@@ -185,13 +185,21 @@ public class SqlEnquiry {
 
 		general_table_list.clear();
 		
-		String sql  = "select  fat.access.id, fat.access.id_karty, fat.access.akcja, fat.access.`data`,\r\n" + 
-				"fat.cards_name_surname_nrhacosoft.nazwisko_imie, fat.cards_name_surname_nrhacosoft.HacoSoftnumber,\r\n" + 
-				"fat.cards_name_surname_nrhacosoft.stanowisko, fat.cards_name_surname_nrhacosoft.firma\r\n" + 
-				"from fat.access\r\n" + 
-				"left join fat.cards_name_surname_nrhacosoft\r\n" + 
-				"on fat.access.id_karty = fat.cards_name_surname_nrhacosoft.id_karty\r\n" + 
-				"where fat.cards_name_surname_nrhacosoft.nazwisko_imie like '%%'\r\n" + 
+//		String sql  = "select  fat.access.id, fat.access.id_karty, fat.access.akcja, fat.access.`data`,\r\n" +
+//				"fat.cards_name_surname_nrhacosoft.nazwisko_imie, fat.cards_name_surname_nrhacosoft.HacoSoftnumber,\r\n" +
+//				"fat.cards_name_surname_nrhacosoft.stanowisko, fat.cards_name_surname_nrhacosoft.firma\r\n" +
+//				"from fat.access\r\n" +
+//				"left join fat.cards_name_surname_nrhacosoft\r\n" +
+//				"on fat.access.id_karty = fat.cards_name_surname_nrhacosoft.id_karty\r\n" +
+//				"where fat.cards_name_surname_nrhacosoft.nazwisko_imie like '%%'\r\n" +
+//				"order by fat.access.`data` desc limit ?";
+
+		String sql = "select  fat.access.id, fat.access.id_karty, fat.access.akcja, fat.access.`data`,\n" +
+				"fat.cards_name_surname_nrhacosoft.nazwisko_imie, fat.cards_name_surname_nrhacosoft.HacoSoftnumber,\n" +
+				"fat.cards_name_surname_nrhacosoft.stanowisko, fat.cards_name_surname_nrhacosoft.firma\n" +
+				"from fat.access\n" +
+				"left join fat.cards_name_surname_nrhacosoft\n" +
+				"on fat.access.id_karty = fat.cards_name_surname_nrhacosoft.id_karty\n" +
 				"order by fat.access.`data` desc limit ?";
 		
 		  try
@@ -217,17 +225,19 @@ public class SqlEnquiry {
 	            }      
 	            takeDate.close();
 	            r.close();
+				connection.close();
 	        }
 		  catch(Exception e)
 		  {
 		  	e.printStackTrace();
 		  }
-		
+
+
 	return general_table_list;	
 	}
 
 
-	public UserHistory getUserHistory(int worker_id)
+	public UserHistory getUserHistory(int worker_id,int count)
 	{
 		connection = DBconnector.Connection2DB.dbConnector();
 
@@ -269,6 +279,14 @@ public class SqlEnquiry {
 				hacofost_numer = r.getString("HacoSoftnumber");
 				stanowisko = r.getString("stanowisko");
 				firma = r.getString("firma");
+			}
+			else {
+				id_karty = String.valueOf(worker_id);
+				data_utworzenia = "brak";
+				nazwisko_imie = "brak";
+				hacofost_numer = "brak";
+				stanowisko = "brak";
+				firma = "brak";
 
 			}
 			takeDate.close();
@@ -285,11 +303,12 @@ public class SqlEnquiry {
 		// get all info about worker in/out in FAT entrance gate
 		sql_gate_actions = "select a.akcja,a.data from fat.access a \n" +
 				"where id_karty  = ?\n" +
-				"order by `data` desc ";
+				"order by `data` desc limit ?";
 
 		try {
 			PreparedStatement takeDate2 = connection.prepareStatement(sql_gate_actions);
 			takeDate2.setInt(1, worker_id);
+			takeDate2.setInt(2, count);
 			ResultSet r2 = takeDate2.executeQuery();
 
 			while(r2.next())
